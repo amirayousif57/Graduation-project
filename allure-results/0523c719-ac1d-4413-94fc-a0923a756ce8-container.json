@@ -1,0 +1,1 @@
+{"uuid":"0523c719-ac1d-4413-94fc-a0923a756ce8","name":"GUI.Test.LoginTest.Teardown","children":["e6d941ab-b441-4ac9-8780-04f5d2524988"],"description":"","befores":[],"afters":[{"name":"Teardown","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1737482452057,"stop":1737482453018}],"start":1737482452056,"stop":1737482453018}

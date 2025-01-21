@@ -10,17 +10,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # You can choose other environments like 'windows-latest', 'macos-latest'
+    runs-on: ubuntu-latest  # Or 'windows-latest', 'macos-latest', etc.
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 17 (or 17)
+      - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
-          java-version: '17'  # or 17
-          distribution: 'temurin'  # Using Temurin JDK distribution (replacing AdoptOpenJDK)
+          java-version: '11'  # Or use '17' for Java 17
 
       - name: Cache Maven dependencies
         uses: actions/cache@v2
@@ -30,15 +29,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Install dependencies with Maven
-        run: mvn clean install  # This will install the dependencies and build your project
+      - name: Build and Test with Maven
+        run: mvn clean install  # Ensures tests are run as part of the build
 
-      - name: Run Tests with TestNG
-        run: mvn test  # Runs tests using Maven with TestNG
-
-      - name: Upload TestNG Reports (updated to v3)
+      - name: Upload TestNG Reports (for review)
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: testng-reports
-          path: target/test-classes/testng-results.xml  # Ensure this path is correct
+          path: target/surefire-reports  # Upload Surefire reports
