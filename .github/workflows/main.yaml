@@ -42,7 +42,7 @@ jobs:
 
       # Step 6: Optionally, upload test results
       - name: Upload TestNG Test Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Update to v3
         with:
           name: testng-results
           path: target/surefire-reports/  # Modify this if your reports are stored elsewhere
