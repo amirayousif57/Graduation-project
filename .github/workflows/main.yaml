@@ -1,30 +1,27 @@
-name: CI/CD for Selenium Test Automation
+name: Java CI with Maven
 
 on:
   push:
     branches:
-      - main  # Trigger on changes to the main branch
+      - main
   pull_request:
     branches:
-      - main  # Trigger on pull requests targeting the main branch
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu image
+    runs-on: ubuntu-latest  # You can choose other environments like 'windows-latest', 'macos-latest'
 
     steps:
-      # Step 1: Check out the code from the repository
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Set up Java 11 (or your required Java version)
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'temurin'
+          distribution: 'temurin'  # Using Temurin JDK distribution (replacing AdoptOpenJDK)
 
-      # Step 3: Cache Maven dependencies (optional but speeds up builds)
       - name: Cache Maven dependencies
         uses: actions/cache@v2
         with:
@@ -33,30 +30,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Step 4: Install Maven dependencies
-      - name: Install Dependencies
-        run: mvn install -DskipTests
+      - name: Install dependencies with Maven
+        run: mvn clean install  # This will install the dependencies and build your project
 
-      # Step 5: Run the Selenium TestNG tests using the testng.xml file
-      - name: Run Tests
-        run: mvn test -DsuiteXmlFile=testng.xml
+      - name: Run Tests with TestNG
+        run: mvn test  # Runs tests using Maven with TestNG
 
-      # Step 6: Optionally, upload test results
-      - name: Upload TestNG Test Results
-        uses: actions/upload-artifact@v3  # Update to v3
+      - name: Upload TestNG Reports (updated to v3)
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
-          name: testng-results
-          path: target/surefire-reports/  # Modify this if your reports are stored elsewhere
-
-  # You can define additional jobs here like deployment, etc. For example:
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build  # Ensure deployment happens only after the build job completes
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Deploy to Server
-        run: |
-          echo "Deploying application..."
-          # Add your deployment commands here, for example, using SSH to deploy to your server
+          name: testng-reports
+          path: target/test-classes/testng-results.xml  # Ensure this path is correct
