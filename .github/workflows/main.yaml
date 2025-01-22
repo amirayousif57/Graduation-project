@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution:  'temurin'
+          distribution: 'temurin'
 
       # Step 3: Install dependencies using Maven
       - name: Set up Maven
