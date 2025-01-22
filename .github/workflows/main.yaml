@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'  # Specify the version of JDK you want (e.g., '11', '17', etc.)
-          distribution: 'temurin'  # Use the Temurin distribution
+          distribution: 'corretto'  # Use the Temurin distribution
 
       # Step 3: Install dependencies using Maven
       - name: Set up Maven
