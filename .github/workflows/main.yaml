@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adoptopenjdk'
+          distribution: ' adoptium '
 
       # Step 3: Install dependencies using Maven
       - name: Set up Maven
